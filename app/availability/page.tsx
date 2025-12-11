@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getCurrentUser } from '@/lib/auth/user';
-import AvailabilityClient from './AvailabilityClient';
+import CalendarShell from './CalendarShell';
 
 export default async function AvailabilityPage() {
   const user = await getCurrentUser();
@@ -8,11 +8,10 @@ export default async function AvailabilityPage() {
     redirect('/login');
   }
 
-  return (
-    <div className="mx-auto max-w-3xl">
-      <h1 className="mb-6 text-2xl font-semibold">My Availability</h1>
-      <AvailabilityClient />
-    </div>
-  );
+  const res = await fetch('/api/calendar', { cache: 'no-store' });
+
+  const feed = await res.json();
+
+  return <CalendarShell initialData={feed} />;
 }
 

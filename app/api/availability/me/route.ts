@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
 
     const db = getDb();
     let query = `
-      SELECT id, user_id, start_date, end_date, reason, created_at
+      SELECT id, user_id, start_date, end_date, start_datetime, end_datetime, reason, created_at
       FROM blocked_periods
       WHERE user_id = ?
     `;
@@ -25,26 +25,28 @@ export async function GET(req: NextRequest) {
 
     if (from && to) {
       query += ` AND (
-        (start_date <= ? AND end_date >= ?) OR
-        (start_date >= ? AND start_date <= ?) OR
-        (end_date >= ? AND end_date <= ?)
+        (start_datetime <= ? AND end_datetime >= ?) OR
+        (start_datetime >= ? AND start_datetime <= ?) OR
+        (end_datetime >= ? AND end_datetime <= ?)
       )`;
       params.push(to, from, from, to, from, to);
     } else if (from) {
-      query += ` AND end_date >= ?`;
+      query += ` AND end_datetime >= ?`;
       params.push(from);
     } else if (to) {
-      query += ` AND start_date <= ?`;
+      query += ` AND start_datetime <= ?`;
       params.push(to);
     }
 
-    query += ` ORDER BY start_date ASC`;
+    query += ` ORDER BY start_datetime ASC`;
 
     const periods = db.prepare(query).all(...params) as Array<{
       id: number;
       user_id: number;
       start_date: string;
       end_date: string;
+      start_datetime: string;
+      end_datetime: string;
       reason: string | null;
       created_at: string;
     }>;
@@ -55,6 +57,8 @@ export async function GET(req: NextRequest) {
         userId: p.user_id,
         startDate: p.start_date,
         endDate: p.end_date,
+        start: p.start_datetime,
+        end: p.end_datetime,
         reason: p.reason,
         createdAt: p.created_at,
       })),

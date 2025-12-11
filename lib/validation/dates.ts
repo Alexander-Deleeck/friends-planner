@@ -3,6 +3,8 @@ export type DateValidationResult =
   | { valid: false; error: string };
 
 const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+const ISO_DATETIME_REGEX =
+  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})?$/;
 
 export const validateDateString = (dateStr: string): DateValidationResult => {
   if (!dateStr || typeof dateStr !== 'string') {
@@ -67,5 +69,41 @@ export const datesOverlap = (
   const e2 = new Date(end2 + 'T00:00:00');
 
   return s1 <= e2 && s2 <= e1;
+};
+
+export const normalizeToDate = (value: string, endOfDay = false): string | null => {
+  // Accept either date-only or full ISO datetime
+  if (ISO_DATE_REGEX.test(value)) {
+    const date = new Date(value + 'T00:00:00Z');
+    if (isNaN(date.getTime())) return null;
+    if (endOfDay) {
+      date.setUTCHours(23, 59, 59, 999);
+    }
+    return date.toISOString();
+  }
+
+  if (ISO_DATETIME_REGEX.test(value)) {
+    const date = new Date(value);
+    if (isNaN(date.getTime())) return null;
+    return date.toISOString();
+  }
+
+  return null;
+};
+
+export const validateDateTimeRange = (
+  start: string,
+  end: string,
+): { valid: true; startIso: string; endIso: string } | { valid: false; error: string } => {
+  const startIso = normalizeToDate(start, false);
+  if (!startIso) return { valid: false, error: 'Invalid start datetime' };
+  const endIso = normalizeToDate(end, true);
+  if (!endIso) return { valid: false, error: 'Invalid end datetime' };
+
+  if (new Date(startIso) > new Date(endIso)) {
+    return { valid: false, error: 'Start must be before or equal to end' };
+  }
+
+  return { valid: true, startIso, endIso };
 };
 
