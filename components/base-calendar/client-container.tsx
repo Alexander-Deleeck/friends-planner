@@ -91,7 +91,7 @@ export function ClientContainer({ view, onChangeView }: IProps) {
   }, [filteredEvents]);
 
   return (
-    <div className="overflow-hidden rounded-xl border">
+    <div className="overflow-hidden rounded-xl border border-border bg-background">
       <CalendarHeader view={view} events={filteredEvents} onChangeView={onChangeView} />
 
       <DndProviderWrapper>

@@ -103,7 +103,7 @@
    };
  
    return (
-     <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:border-zinc-800 dark:bg-zinc-950/70">
+     <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-linear-to-r/srgb from-violet-500 to-teal-400">
        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
          <div className="flex min-w-0 items-center gap-3">
            <nav aria-label="Breadcrumb" className="min-w-0">
@@ -128,7 +128,7 @@
              </ol>
            </nav>
          </div>
- 
+
          <div className="flex shrink-0 items-center gap-2">
            <Button
              type="button"

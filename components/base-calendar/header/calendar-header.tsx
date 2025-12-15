@@ -21,7 +21,7 @@ export function CalendarHeader({ view, events, onChangeView }: IProps) {
   };
 
   return (
-    <div className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
+    <div className="flex flex-col gap-4 rounded-xl border border-border bg-card p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
       <div className="flex items-center gap-3">
         <TodayButton />
         <DateNavigator view={view} events={events} />

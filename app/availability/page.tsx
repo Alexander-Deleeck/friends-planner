@@ -1,7 +1,7 @@
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getCurrentUser } from '@/lib/auth/user';
-import CalendarShell from '../../components/CalendarShell';
+import AvailabilityShell from '@/components/AvailabilityShell';
 
 export default async function AvailabilityPage() {
   const user = await getCurrentUser();
@@ -23,6 +23,6 @@ export default async function AvailabilityPage() {
 
   const feed = await res.json();
 
-  return <CalendarShell initialData={feed} />;
+  return <AvailabilityShell initialData={feed} />;
 }
 
