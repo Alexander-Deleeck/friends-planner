@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { getCurrentUser } from "@/lib/auth/user";
+import { AppHeader } from "@/components/AppHeader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,30 +28,25 @@ export default async function RootLayout({
   const user = await getCurrentUser();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-zinc-50 text-zinc-900 antialiased`}
       >
-        <header className="border-b border-zinc-200 bg-white">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-            <Link href="/" className="text-lg font-semibold">
-              Friends Planner
-            </Link>
-            <nav className="flex items-center gap-4 text-sm">
-              {user && (
-                <>
-                  <Link href="/availability" className="text-zinc-700 hover:text-black">
-                    Availability
-                  </Link>
-                </>
-              )}
-              <Link href="/login" className="text-zinc-700 hover:text-black">
-                {user ? `Signed in as ${user.display_name}` : "Login"}
-              </Link>
-            </nav>
-          </div>
-        </header>
-        <main className="mx-auto max-w-5xl px-6 py-6">{children}</main>
+        <Script id="theme-init" strategy="beforeInteractive">{`
+          (function () {
+            try {
+              var key = 'theme';
+              var saved = window.localStorage.getItem(key);
+              var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+              var next = (saved === 'dark' || saved === 'light') ? saved : (systemDark ? 'dark' : 'light');
+              var el = document.documentElement;
+              if (next === 'dark') { el.classList.add('dark'); el.classList.remove('light'); }
+              else { el.classList.add('light'); el.classList.remove('dark'); }
+            } catch (e) {}
+          })();
+        `}</Script>
+        <AppHeader user={user ? { id: user.id, display_name: user.display_name } : null} />
+        <main className="w-full">{children}</main>
       </body>
     </html>
   );
