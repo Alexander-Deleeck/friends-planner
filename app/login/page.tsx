@@ -1,6 +1,8 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 type RequestResponse = {
   loginUrl: string;
@@ -44,16 +46,15 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-xl flex-col gap-6 px-6 py-12">
-      <h1 className="text-2xl font-semibold">Login</h1>
-      <p className="text-sm text-zinc-600">
+      <h1 className="text-2xl font-semibold text-foreground">Login</h1>
+      <p className="text-sm text-muted-foreground">
         Enter your email to request a magic link. In development, the login URL
         will be shown below for copy/paste.
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-medium">Email</span>
-          <input
-            className="rounded border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-black"
+          <span className="text-sm font-medium text-foreground">Email</span>
+          <Input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -61,19 +62,19 @@ export default function LoginPage() {
             required
           />
         </label>
-        <button
+        <Button
           type="submit"
-          className="inline-flex items-center justify-center rounded bg-black px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
+          className="w-full"
         >
           Send magic link
-        </button>
+        </Button>
       </form>
-      {status && <div className="text-sm text-green-700">{status}</div>}
-      {error && <div className="text-sm text-red-600">{error}</div>}
+      {status && <div className="text-sm text-green-600 font-medium">{status}</div>}
+      {error && <div className="text-sm text-destructive">{error}</div>}
       {loginUrl && (
-        <div className="rounded border border-dashed border-zinc-300 bg-zinc-50 p-3 text-sm">
-          <div className="font-semibold">Login URL (dev only)</div>
-          <a className="text-blue-700 underline" href={loginUrl}>
+        <div className="rounded-lg border border-dashed border-border bg-card/60 p-4 text-sm backdrop-blur-sm">
+          <div className="font-semibold text-foreground mb-1">Login URL (dev only)</div>
+          <a className="text-primary hover:underline break-all" href={loginUrl}>
             {loginUrl}
           </a>
         </div>

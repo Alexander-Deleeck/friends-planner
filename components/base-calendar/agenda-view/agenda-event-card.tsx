@@ -7,38 +7,12 @@ import { Clock, Text, User } from "lucide-react";
 import { useCalendar } from "@/contexts/calendar-context";
 
 import { EventDetailsDialog } from "@/components/base-calendar/dialogs/event-details-dialog";
+import { getEventClasses } from "@/components/base-calendar/event-style";
 
 import type { IEvent } from "@/types/interfaces";
-import type { VariantProps } from "class-variance-authority";
 
 const agendaEventCardVariants = cva(
-  "flex select-none items-center justify-between gap-3 rounded-md border p-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-  {
-    variants: {
-      color: {
-        // Colored variants
-        blue: "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300 [&_.event-dot]:fill-blue-600",
-        green: "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300 [&_.event-dot]:fill-green-600",
-        red: "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300 [&_.event-dot]:fill-red-600",
-        yellow: "border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300 [&_.event-dot]:fill-yellow-600",
-        purple: "border-purple-200 bg-purple-50 text-purple-700 dark:border-purple-800 dark:bg-purple-950 dark:text-purple-300 [&_.event-dot]:fill-purple-600",
-        orange: "border-orange-200 bg-orange-50 text-orange-700 dark:border-orange-800 dark:bg-orange-950 dark:text-orange-300 [&_.event-dot]:fill-orange-600",
-        gray: "border-neutral-200 bg-neutral-50 text-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300 [&_.event-dot]:fill-neutral-600",
-
-        // Dot variants
-        "blue-dot": "bg-neutral-50 dark:bg-neutral-900 [&_.event-dot]:fill-blue-600",
-        "green-dot": "bg-neutral-50 dark:bg-neutral-900 [&_.event-dot]:fill-green-600",
-        "red-dot": "bg-neutral-50 dark:bg-neutral-900 [&_.event-dot]:fill-red-600",
-        "orange-dot": "bg-neutral-50 dark:bg-neutral-900 [&_.event-dot]:fill-orange-600",
-        "purple-dot": "bg-neutral-50 dark:bg-neutral-900 [&_.event-dot]:fill-purple-600",
-        "yellow-dot": "bg-neutral-50 dark:bg-neutral-900 [&_.event-dot]:fill-yellow-600",
-        "gray-dot": "bg-neutral-50 dark:bg-neutral-900 [&_.event-dot]:fill-neutral-600",
-      },
-    },
-    defaultVariants: {
-      color: "blue-dot",
-    },
-  }
+  "flex select-none items-center justify-between gap-3 rounded-sm p-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring backdrop-blur-sm transition-all shadow-sm ring-1 ring-inset ring-opacity-25 hover:shadow-md hover:ring-opacity-40"
 );
 
 interface IProps {
@@ -53,9 +27,8 @@ export function AgendaEventCard({ event, eventCurrentDay, eventTotalDays }: IPro
   const startDate = parseISO(event.startDate);
   const endDate = parseISO(event.endDate);
 
-  const color = (badgeVariant === "dot" ? `${event.color}-dot` : event.color) as VariantProps<typeof agendaEventCardVariants>["color"];
-
-  const agendaEventCardClasses = agendaEventCardVariants({ color });
+  const colorClasses = getEventClasses(event, badgeVariant);
+  const agendaEventCardClasses = `${agendaEventCardVariants()} ${colorClasses}`;
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {

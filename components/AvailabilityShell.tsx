@@ -102,8 +102,8 @@ export default function AvailabilityShell({ initialData }: Props) {
   return (
     <CalendarActionsProvider value={{ currentUserId: data.currentUserId, refresh, rsvp, deleteEvent, createAvailability, createEvent, submitting }}>
       <CalendarProvider users={data.users} events={data.events}>
-        <div className="flex min-h-[calc(100dvh-56px)] w-full bg-background">
-          <aside className="hidden w-[340px] shrink-0 border-r border-border bg-card md:block">
+        <div className="flex min-h-[calc(100dvh-56px)] w-full bg-background/50">
+          <aside className="hidden w-[340px] shrink-0 border-r border-border/40 bg-card/60 backdrop-blur-md md:block">
             <ScrollArea className="h-[calc(100dvh-56px)]">
               <div className="p-4">
                 <Sidebar users={data.users} />

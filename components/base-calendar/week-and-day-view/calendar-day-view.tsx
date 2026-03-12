@@ -47,9 +47,9 @@ export function CalendarDayView({ singleDayEvents, multiDayEvents }: IProps) {
           <DayViewMultiDayEventsRow selectedDate={selectedDate} multiDayEvents={multiDayEvents} />
 
           {/* Day header */}
-          <div className="relative z-20 flex border-b">
+          <div className="relative z-20 flex border-b border-border/40">
             <div className="w-18"></div>
-            <span className="flex-1 border-l py-2 text-center text-xs font-medium text-muted-foreground">
+            <span className="flex-1 border-l border-border/40 py-2 text-center text-xs font-medium text-muted-foreground">
               {format(selectedDate, "EE")} <span className="font-semibold text-foreground">{format(selectedDate, "d")}</span>
             </span>
           </div>
@@ -69,38 +69,38 @@ export function CalendarDayView({ singleDayEvents, multiDayEvents }: IProps) {
             </div>
 
             {/* Day grid */}
-            <div className="relative flex-1 border-l">
+            <div className="relative flex-1 border-l border-border/40">
               <div className="relative">
                 {hours.map((hour, index) => {
                   const isDisabled = !isWorkingHour(selectedDate, hour, workingHours);
 
                   return (
-                    <div key={hour} className={cn("relative", isDisabled && "bg-calendar-disabled-hour")} style={{ height: "96px" }}>
-                      {index !== 0 && <div className="pointer-events-none absolute inset-x-0 top-0 border-b"></div>}
+                    <div key={hour} className={cn("relative", isDisabled && "bg-muted/30")} style={{ height: "96px" }}>
+                      {index !== 0 && <div className="pointer-events-none absolute inset-x-0 top-0 border-b border-border/40"></div>}
 
                       <DroppableTimeBlock date={selectedDate} hour={hour} minute={0}>
                         <AddEventDialog startDate={selectedDate} startTime={{ hour, minute: 0 }}>
-                          <div className="absolute inset-x-0 top-0 h-[24px] cursor-pointer transition-colors hover:bg-accent" />
+                          <div className="absolute inset-x-0 top-0 h-[24px] cursor-pointer transition-colors hover:bg-accent/50" />
                         </AddEventDialog>
                       </DroppableTimeBlock>
 
                       <DroppableTimeBlock date={selectedDate} hour={hour} minute={15}>
                         <AddEventDialog startDate={selectedDate} startTime={{ hour, minute: 15 }}>
-                          <div className="absolute inset-x-0 top-[24px] h-[24px] cursor-pointer transition-colors hover:bg-accent" />
+                          <div className="absolute inset-x-0 top-[24px] h-[24px] cursor-pointer transition-colors hover:bg-accent/50" />
                         </AddEventDialog>
                       </DroppableTimeBlock>
 
-                      <div className="pointer-events-none absolute inset-x-0 top-1/2 border-b border-dashed"></div>
+                      <div className="pointer-events-none absolute inset-x-0 top-1/2 border-b border-dashed border-border/30"></div>
 
                       <DroppableTimeBlock date={selectedDate} hour={hour} minute={30}>
                         <AddEventDialog startDate={selectedDate} startTime={{ hour, minute: 30 }}>
-                          <div className="absolute inset-x-0 top-[48px] h-[24px] cursor-pointer transition-colors hover:bg-accent" />
+                          <div className="absolute inset-x-0 top-[48px] h-[24px] cursor-pointer transition-colors hover:bg-accent/50" />
                         </AddEventDialog>
                       </DroppableTimeBlock>
 
                       <DroppableTimeBlock date={selectedDate} hour={hour} minute={45}>
                         <AddEventDialog startDate={selectedDate} startTime={{ hour, minute: 45 }}>
-                          <div className="absolute inset-x-0 top-[72px] h-[24px] cursor-pointer transition-colors hover:bg-accent" />
+                          <div className="absolute inset-x-0 top-[72px] h-[24px] cursor-pointer transition-colors hover:bg-accent/50" />
                         </AddEventDialog>
                       </DroppableTimeBlock>
                     </div>

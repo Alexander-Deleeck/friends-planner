@@ -103,61 +103,61 @@
    };
  
    return (
-     <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-linear-to-r/srgb from-violet-500 to-teal-400">
-       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-         <div className="flex min-w-0 items-center gap-3">
-           <nav aria-label="Breadcrumb" className="min-w-0">
-             <ol className="flex min-w-0 items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
-               {crumbs.map((c, idx) => {
-                 const isLast = idx === crumbs.length - 1;
-                 return (
-                   <Fragment key={c.href}>
-                     <li className="min-w-0">
-                       {isLast ? (
-                         <span className="truncate font-semibold text-zinc-900 dark:text-zinc-100">{c.label}</span>
-                       ) : (
-                         <Link className="truncate hover:text-zinc-900 dark:hover:text-zinc-100" href={c.href}>
-                           {c.label}
-                         </Link>
-                       )}
-                     </li>
-                     {!isLast && <li className="text-zinc-400 dark:text-zinc-600">/</li>}
-                   </Fragment>
-                 );
-               })}
-             </ol>
-           </nav>
-         </div>
+    <header className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-md">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+        <div className="flex min-w-0 items-center gap-3">
+          <nav aria-label="Breadcrumb" className="min-w-0">
+            <ol className="flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
+              {crumbs.map((c, idx) => {
+                const isLast = idx === crumbs.length - 1;
+                return (
+                  <Fragment key={c.href}>
+                    <li className="min-w-0">
+                      {isLast ? (
+                        <span className="truncate font-semibold text-foreground">{c.label}</span>
+                      ) : (
+                        <Link className="truncate hover:text-foreground transition-colors" href={c.href}>
+                          {c.label}
+                        </Link>
+                      )}
+                    </li>
+                    {!isLast && <li className="text-muted-foreground/60">/</li>}
+                  </Fragment>
+                );
+              })}
+            </ol>
+          </nav>
+        </div>
 
-         <div className="flex shrink-0 items-center gap-2">
-           <Button
-             type="button"
-             variant="outline"
-             size="icon"
-             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-             onClick={toggleTheme}
-           >
-             {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
-           </Button>
- 
-           {user ? (
-             <>
-               <span className="hidden text-sm text-zinc-600 dark:text-zinc-300 sm:block">
-                 Signed in as <span className="font-semibold text-zinc-900 dark:text-zinc-100">{user.display_name}</span>
-               </span>
-               <Button type="button" variant="outline" onClick={onLogout} disabled={loggingOut}>
-                 <LogOut className="mr-2 size-4" />
-                 Logout
-               </Button>
-             </>
-           ) : (
-             <Button asChild variant="outline">
-               <Link href="/login">Login</Link>
-             </Button>
-           )}
-         </div>
-       </div>
-     </header>
+        <div className="flex shrink-0 items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            onClick={toggleTheme}
+          >
+            {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
+          </Button>
+
+          {user ? (
+            <>
+              <span className="hidden text-sm text-muted-foreground sm:block">
+                Signed in as <span className="font-semibold text-foreground">{user.display_name}</span>
+              </span>
+              <Button type="button" variant="outline" onClick={onLogout} disabled={loggingOut}>
+                <LogOut className="mr-2 size-4" />
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Button asChild variant="outline">
+              <Link href="/login">Login</Link>
+            </Button>
+          )}
+        </div>
+      </div>
+    </header>
    );
  }
  
