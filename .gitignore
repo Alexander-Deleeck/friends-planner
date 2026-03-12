@@ -41,7 +41,10 @@ yarn-error.log*
 next-env.d.ts
 
 
+old_nextjs/
 notes/plans/*
 project_plan.md
+old_nextjs/notes/plans/*
+old_nextjs/project_plan.md
 .cursor/rules/*
 .cursor/plans/*
